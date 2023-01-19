@@ -14,13 +14,17 @@
 # Extract some columns (and also make the directory as well)
 data/derived/ted-columns.csv: data/raw/european-commission/ted-sample.csv
 	mkdir -p data/derived
-	csvcut -c ID_NOTICE_CAN,ISO_COUNTRY_CODE,WIN_COUNTRY_CODE,AWARD_VALUE_EURO data/raw/european-commission/ted-sample.csv > data/derived/ted-columns.csv
+	csvcut -c ID_NOTICE_CAN,ISO_COUNTRY_CODE,WIN_COUNTRY_CODE,AWARD_VALUE_EURO $< > $@
 
 # In this case, we don't have ingredients but it's from the internet.
 data/raw/european-commission/ted-sample.csv:
 	mkdir -p data/raw/european-commission
-	curl -Lo data/raw/european-commission/ted-sample.csv "https://github.com/codedthinking/tender-home-bias/releases/download/v1.0/ted-sample.csv"
+	curl -Lo $@ "https://github.com/codedthinking/tender-home-bias/releases/download/v1.0/ted-sample.csv"
 
 ## It knows that we need tem-sample so it downloaded ted-sample before we use csvcut.
+
+### Refering to files quickly. (Name of target and sources.)
+# Name of target :$@
+# Name of source :$<
 
 
